@@ -3,90 +3,45 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>圃場共有デモ</title>
-  <meta property="og:type" content="website">
-  <meta property="og:title" content="更別A圃場 空撮画像">
-  <meta property="og:description" content="圃場全体画像です。中心部の状態を確認し、見回り前に注視すべき場所を把握できます。">
-  <meta property="og:image" content="https://akutodazo.github.io/field-visualization-demo/No4647_20m-snapshot(1).png">
-  <meta property="og:url" content="https://akutodazo.github.io/field-visualization-demo/">
-  <meta name="twitter:card" content="summary_large_image">
-  <style>
-    body {
-      font-family: sans-serif;
-      margin: 0;
-      background: #f5f7f4;
-      color: #1f2d24;
-    }
-    header {
-      background: #2d6a4f;
-      color: white;
-      padding: 20px;
-    }
-    main {
-      padding: 20px;
-      max-width: 900px;
-      margin: auto;
-    }
-    .card {
-      background: white;
-      border-radius: 12px;
-      padding: 18px;
-      margin-bottom: 20px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-    }
-    img {
-      width: 100%;
-      border-radius: 10px;
-      border: 1px solid #ddd;
-    }
-    .label {
-      display: inline-block;
-      background: #d8f3dc;
-      color: #1b4332;
-      padding: 4px 10px;
-      border-radius: 999px;
-      font-size: 14px;
-      margin-right: 6px;
-    }
-    .button {
-      display: inline-block;
-      background: #06c755;
-      color: white;
-      padding: 12px 18px;
-      text-decoration: none;
-      border-radius: 8px;
-      font-weight: bold;
-    }
-  </style>
+  <title>ウェイポイントルート作成</title>
+
+    <!-- Leaflet本体（地図） -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+  <!-- Leaflet.draw（描画プラグイン） -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet-draw@1.0.4/dist/leaflet.draw.css"/>
+  <script src="https://unpkg.com/leaflet-draw@1.0.4/dist/leaflet.draw.js"></script>
+
+  <!-- Turf.js（地理計算） -->
+  <script src="https://unpkg.com/@turf/turf@7/turf.min.js"></script>
+
+  <!-- JSZip（KMZ=ZIPの読み書き） -->
+  <script src="https://unpkg.com/jszip@3.10.1/dist/jszip.min.js"></script>
+
+  <link rel="stylesheet" href="style.css"/>
 </head>
+
 <body>
-  <header>
-    <h1>圃場共有デモ</h1>
-    <p>空撮画像を、農家が判断に使える形で共有する</p>
-  </header>
 
-  <main>
-    <div class="card">
-      <h2>更別A圃場</h2>
-      <p>
-        <span class="label">撮影日：2026年7月15日</span>
-        <span class="label">作物：小麦</span>
-      </p>
-      <p>圃場全体画像です。中心部の状態を確認し、見回り前に注視すべき場所を把握できます。</p>
-      <img src="No4647_20m-snapshot(1).png" alt="圃場全体画像">
-    </div>
+  <!-- 地図表示の箱CSSで高さ指定-->
+  <div id="map" style="height: 70vh;"></div>
 
-    <div class="card">
-      <h2>確認メモ</h2>
-      <ul>
-        <li>圃場中心部をスマホから確認</li>
-        <li>気になる場所を事前に把握</li>
-        <li>LINEで農家同士に共有</li>
-      </ul>
-      <a class="button" href="https://line.me/R/msg/text/?圃場画像を共有します%0Ahttps://akutodazo.github.io/field-visualization-demo/" target="_blank">
-        LINEで共有
-      </a>
-    </div>
-  </main>
+  <!-- パラメーター入力フォーム -->
+  <div id="container">
+     <label>高度(m): <input id="height" type="number" value="50"></label>
+    <label>速度(m/s): <input id="speed" type="number" value="5"></label>
+    <label>進行方向の重なり(%): <input id="front" type="number" value="80"></label>
+    <label>横方向の重なり(%): <input id="side" type="number" value="70"></label>
+    <button id="generate">ルート生成</button>
+    <button id="download">KMZダウンロード</button>
+  </div>
+
+    <!-- 自分のコード -->
+  <script src="js/map.js"></script>
+  <script src="js/route.js"></script>
+  <script src="js/Turf.js"></script>
+  <script src="js/kmz.js"></script>
+  <script src="js/main.js"></script>
 </body>
 </html>
